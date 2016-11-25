@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--
+        To change this license header, choose License Headers in Project Properties.
+        To change this template file, choose Tools | Templates
+        and open the template in the editor.
+        -->
+
+        <script>
+            function clickCounter(mylink)
+            {
+                if (typeof (Storage) !== "undefined")
+                {
+                    var count = localStorage.getItem(mylink);
+                    if (count)
+                    {
+                        if (isNaN(count)) {
+                            localStorage.setItem(mylink, 0);
+                        }
+                        else {
+                            localStorage.setItem(mylink, Number(count) + 1);
+                        }
+                    }
+                    else
+                    {
+                        localStorage.setItem(mylink, 0);
+                    }
+                    //alert(localStorage.getItem(mylink));
+                    document.getElementById("result").innerHTML = "You have accessed this URL " + localStorage.getItem(mylink) + " time(s).";
+                    //document.getElementById(mylink).style.fontSize = localStorage.getItem(mylink);
+                }
+                else
+                {
+                    document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+                }
+            }
+
+            function getFontSize(clickCount) {
+                if (clickCount < 10) {
+                    return "small";
+                }
+                else if (clickCount >= 10 && clickCount < 20) {
+                    return "medium";
+                }
+                else if (clickCount >= 20 && clickCount < 50) {
+                    return "large";
+                }
+                else if (clickCount >= 50 && clickCount < 100) {
+                    return "x-large";
+                }
+                else if (clickCount >= 100) {
+                    return "xx-large";
+                }
+            }
+
+        </script>
+        <style>
+            table {
+                border: 0;
+                width: 100%;
+            }
+            td{
+                vertical-align: top;
+            }
+            thead {
+                background:#ff3333;
+                color: #ffffff;
+            }
+            #list {
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <p>Updated by Gary Wang, May 20, 2014</p>
+        <p id="result" style="font-size: small"></p>
+        <script>
+            //Initial the page with URLs
+            var urls = [];
+
+            //urls.push({urlName: '', urlLink: '', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'Apple Developers', urlLink: 'https://developer.apple.com/', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'CocoaChina', urlLink: 'http://www.cocoachina.com/', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'C114', urlLink: 'http://www.c114.net/', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'CSDN', urlLink: 'http://www.csdn.net/', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'InformationWeek', urlLink: 'http://www.informationweek.com/', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'InfoQ', urlLink: 'http://www.infoq.com/cn', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'Java', urlLink: 'http://www.oracle.com/technetwork/java/index.html', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'MIIT', urlLink: 'http://www.miit.gov.cn/', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'Oracle', urlLink: 'http://www.oracle.com', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'Oracle Blogs', urlLink: 'https://blogs.oracle.com/', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'OTN', urlLink: 'http://www.oracle.com/technetwork', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'OTN CN', urlLink: 'http://www.oracle.com/technetwork/cn/index.html', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'Safari Books', urlLink: 'http://www.safaribooksonline.com/', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'Solaris HCL', urlLink: 'http://www.oracle.com/webfolder/technetwork/hcl/index.html', urlFolder: 'Technologies', urlRank: 0});
+            urls.push({urlName: 'Valleytalk', urlLink: 'http://www.valleytalk.org/', urlFolder: 'Technologies', urlRank: 0});
+            //urls.push({urlName: '', urlLink: '', urlFolder: 'Trainings', urlRank: 0});
+            urls.push({urlName: 'Exalogic', urlLink: 'http://exalogic.us.oracle.com', urlFolder: 'Trainings', urlRank: 0});
+            urls.push({urlName: 'Oracle Media Networks', urlLink: 'http://medianetwork.oracle.com', urlFolder: 'Trainings', urlRank: 0});
+            urls.push({urlName: 'Tech Forum', urlLink: 'http://my.oracle.com/content/web/cnt707186', urlFolder: 'Trainings', urlRank: 0});
+            urls.push({urlName: 'ISVe TOI', urlLink: 'http://twiki.us.oracle.com/bin/view/MDE/ISVeTOIs', urlFolder: 'Trainings', urlRank: 0});
+            urls.push({urlName: 'OU Employee Training', urlLink: 'http://my.oracle.com/content/web/cnt228156', urlFolder: 'Trainings', urlRank: 0});
+            urls.push({urlName: 'OU Courseware', urlLink: 'http://aces.us.oracle.com/pls/cis/CIS_SSCWREQ.courseware', urlFolder: 'Trainings', urlRank: 0});
+            urls.push({urlName: 'Retriever', urlLink: 'http://retriever.us.oracle.com', urlFolder: 'Trainings', urlRank: 0});
+            urls.push({urlName: 'SAE', urlLink: 'http://sae.us.oracle.com/', urlFolder: 'Trainings', urlRank: 0});
+            //urls.push({urlName: '', urlLink: '', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'Asset', urlLink: 'http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveKylinDragonAssetList', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'CWT', urlLink: 'https://www.cwt-online.com.cn/Client/User/UserLogin.aspx', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'Global Access Numbers', urlLink: 'http://my.oracle.com/site/git/2727/1565/index.html', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'ISVe EA', urlLink: 'http://isve.cn.oracle.com/index.jsp', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'ISVe EA Twiki', urlLink: 'http://twiki.us.oracle.com/bin/view/MDE/GPEEATwiki', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'ISVe Project Search', urlLink: 'http://twiki.us.oracle.com/isve/search.html', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'ISVe Workspace', urlLink: 'https://stbeehive.oracle.com/teamcollab/wiki/ISV+Engineering', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'ISV Dashboard', urlLink: 'http://twiki.us.oracle.com/bin/view/MDE/EAIsvList', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'Marketing', urlLink: 'http://my.oracle.com/site/mktg/creative/creative', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'My Beehive Space', urlLink: 'https://stbeehive.oracle.com/teamcollab/library/st/GaryWangSlides/Public+Documents', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'People Search', urlLink: 'https://people.us.oracle.com/pls/oracle/f?p=8000:1:14690348288108:::::', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'NetBenifit', urlLink: 'https://login.fidelity.com/ftgw/Fas/Fidelity/IspCust/Login/Init', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'PingAn', urlLink: 'http://www.pingan.com/index.shtml', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'Password', urlLink: 'https://gmp.oracle.com/captcha/index.php', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'Self Service', urlLink: 'https://global-ebusiness.oraclecorp.com/OA_HTML/AppsLogin', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'System Handbook', urlLink: 'https://mosemp.us.oracle.com/handbook_internal/', urlFolder: 'Office', urlRank: 0});
+            urls.push({urlName: 'Zimbra', urlLink: 'https://stbeehive.oracle.com/zimbra/', urlFolder: 'Office', urlRank: 0});
+            //urls.push({urlName: '', urlLink: '', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'Dragon Projects', urlLink: 'http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveDragonMgmtTool', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'Kylin Projects', urlLink: 'http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveKylinMgmtTool', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'ISVe Mgmt Tools', urlLink: 'http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveMgmtTool', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'ISVe WW', urlLink: 'http://twiki.us.oracle.com/bin/view/MDE/IsveWorldwide', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'ISV Portfolio', urlLink: 'http://twiki.us.oracle.com/bin/view/ISVePortfolio', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'ISV Portfolio APAC', urlLink: 'http://twiki.us.oracle.com/bin/view/ISVePortfolio/ISVPortfolioAPACMgmt', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'ISV Portfolio EA', urlLink: 'http://twiki.us.oracle.com/bin/view/ISVePortfolio/ISVPortfolioEAMgmt', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'ISV Events', urlLink: 'http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveEaEduEventsFY14', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'OPN', urlLink: 'https://solutions.oracle.com/scwar/sc/index.html', urlFolder: 'Goal', urlRank: 0});
+            urls.push({urlName: 'Solaris Applications Engineering', urlLink: 'http://solarisapps.us.oracle.com/', urlFolder: 'Goal', urlRank: 0});
+            //urls.push({urlName: '', urlLink: '', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: '163 Mail', urlLink: 'http://mail.163.com/exitmail.htm', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: '52che', urlLink: 'http://www.52che.com/', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'AirChina Club', urlLink: 'http://ffp.airchina.com.cn/cn/index.html', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'Autohome', urlLink: 'http://www.autohome.com.cn/', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'Baidu', urlLink: 'http://www.baidu.com', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'Beijing Traffic Admin', urlLink: 'http://www.bjjtgl.gov.cn/', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'BJGJJ', urlLink: 'http://www.bjgjj.gov.cn/lmkzl/200803/t20080307_1393.html#', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'BBN Mail', urlLink: 'http://mail.bbn.com.cn/mail/login.action', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'Google', urlLink: 'http://www.google.com.hk/', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'Google Translate', urlLink: 'http://translate.google.cn/?sourceid=cnhp#', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'Google Groups', urlLink: 'http://groups.google.com/', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'Sina', urlLink: 'http://www.sina.com.cn/', urlFolder: 'Life', urlRank: 0});
+            urls.push({urlName: 'SMTH', urlLink: 'http://www.newsmth.net/', urlFolder: 'Life', urlRank: 0});
+            //urls.sort(); ?
+            urls.sort(function(a, b) {
+                if (a.urlName < b.urlName)
+                    return -1;
+                if (a.urlName > b.urlName)
+                    return 1;
+                return 0;
+            });
+
+            //pickup the folders
+            var folders = ["Technologies", "Trainings", "Office", "Goal", "Life"];
+            document.write("<table><thead><tr>");
+            for (var i = 0; i < folders.length; i++) {
+                document.write("<td>" + folders[i] + "</td>");
+            }
+
+            document.write("</tr></thead><tbody><tr>");
+            for (var i = 0; i < folders.length; i++) {
+                document.write("<td>");
+                for (var j = 0; j < urls.length; j++) {
+                    if (urls[j].urlFolder != folders[i])
+                        continue;
+                    var ifsize = getFontSize(localStorage.getItem(urls[j].urlName)); //Get the font-size from the local storage
+                    //alert(ifsize);
+                    document.write("<li><a href=\"" + urls[j].urlLink + "\" onClick=\"clickCounter('" + urls[j].urlName + "')\" style=\"font-size:" + ifsize + "\">" + urls[j].urlName + "</a></li>");
+                    //alert(ifsize);
+                }
+                document.write("</td>");
+            }
+
+            document.write("</tr></tbody></table>");
+        </script>
+
+
+
+    </body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>ReportGenerator websockets & progressbar</title>
+        <link rel="stylesheet" href="css/jquery-ui.css">
+        <script src="js/jquery-1.9.1.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/rg.css">
+    </head>
+
+    <body>
+        <h1>Report Generator</h1>
+
+        <table id="table1">
+            <tr>
+                <td>Select the twiki page: 
+                    <select id="pageSelect">
+                        <option value ="http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveKylinProjectsFY17">Kylin17</option>
+                        <option value ="http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveKylinProjectsFY16">Kylin16</option>
+                        <option value ="http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveKylinDragonProjectsFY16">KylinDragon</option>
+                        <option value="http://twiki.us.oracle.com/bin/view/ISVeProjects/IsveAPACProjectsFY16">ISVE APAC</option>
+                    </select>
+                    <input id="startBtn" type="submit" value="Start" onclick="start()" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="messages"></div>
+                    <div id="progressbar"><div class="progress-label">0%</div></div>
+                </td>
+            </tr>
+            <!--
+            <tr>
+                <td>Java DB</td>
+            </tr>
+            <tr>
+                <td><div id="list">
+                        <ul>
+                            <li><a href="all_data.jsp">All Data</a></li>
+                            <li>Search</li>
+                            <li><a href="goal_data.jsp">FY14 Goal Data</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            -->
+            <tr>
+                <td>MongoDB</td>
+            </tr>
+            <tr>
+                <td><div id="list">
+                        <ul>
+                            <li><a href="all_data_mg.jsp">All Data</a></li>
+                            <li><a href="search_mg.jsp">Search</a></li>
+                            <li><a href="goal_data_mg.jsp">FY17 Goal Data</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <script type="text/javascript">
+
+            var progressbar = $("#progressbar"), progressLabel = $(".progress-label");
+
+            progressbar.progressbar({
+                value: false,
+                change: function() {
+                    progressLabel.text(progressbar.progressbar("value") + "%");
+                },
+                complete: function() {
+                    progressLabel.text("Complete!");
+                }
+            });
+
+            var webSocket = new WebSocket("ws://"+location.host+"/ReportGenerator/websocket");
+
+            webSocket.onerror = function(event) {
+                onError(event)
+            };
+
+            webSocket.onopen = function(event) {
+                onOpen(event)
+            };
+
+            webSocket.onmessage = function(event) {
+                onMessage(event)
+            };
+
+            function onMessage(event) {
+                var eventData = 'STATUS';
+                eventData = event.data;
+
+                if (eventData.indexOf('STATUS') == 0) {
+                    document.getElementById('messages').innerHTML = eventData;
+                } else {
+                    var actual = parseInt(eventData);
+                    progressbar.progressbar('value', actual);
+                }
+            }
+
+            function onOpen(event) {
+                document.getElementById('messages').innerHTML
+                        = 'STATUS: Connection established.';
+            }
+
+            function onError(event) {
+                alert(event.data);
+            }
+
+            function start() {
+                document.getElementById('startBtn').disabled = true;
+                document.getElementById('pageSelect').disabled = true;
+                webSocket.send(document.getElementById('pageSelect').value);
+                return false;
+            }
+        </script>
+    </body>
+</html>
